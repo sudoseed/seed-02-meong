@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>멍때림 측정기 — MEONG-O-METER · SEED #02</title>
+  <meta name="description" content="아무것도 안 하고 버틴 시간을 국가공인 수준으로 진지하게 측정해 드립니다. 마우스, 키보드, 터치, 스크롤 하나라도 움직이면 실격. SUDO SEED의 두 번째 작품.">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="멍때림 측정기 — 아무것도 안 하는 능력을 공식적으로 측정해 드립니다">
+  <meta property="og:description" content="움직이면 실격. 당신의 멍때림은 몇 단입니까? MEONG-O-METER v1.0 · 국가공인 아님">
+  <meta name="theme-color" content="#0a0a0a">
+  <link rel="icon" type="image/png" href="assets/favicon.png">
+  <link rel="apple-touch-icon" href="assets/favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600;700&family=Nanum+Gothic+Coding:wght@400;700&family=Noto+Serif+KR:wght@700;900&display=swap">
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <div class="app" id="app">
+    <header class="site-head">
+      <div class="wrap head-in">
+        <a class="brand" href="./" aria-label="SUDO SEED 처음 화면">
+          <img src="assets/logo.png" alt="SUDO" width="1248" height="832">
+        </a>
+        <span class="head-tag">SEED #02</span>
+      </div>
+    </header>
+
+    <main>
+      <!-- 1. 대기 화면 -->
+      <section class="screen idle" id="idle" aria-labelledby="title">
+        <div class="wrap">
+          <p class="eyebrow">SEED #02 · SUDO SEED</p>
+          <h1 class="title" id="title">멍때림 측정기</h1>
+          <p class="sub">MEONG-O-METER v1.0 · 국가공인 아님</p>
+
+          <section class="term" aria-labelledby="rulesTitle">
+            <div class="term-bar">
+              <span class="term-dots" aria-hidden="true"><i></i><i></i><i></i></span>
+              <span id="rulesTitle">~/sudo-seed/meong-o-meter · 측정 수칙</span>
+            </div>
+            <div class="term-body">
+              <ol class="sr-only">
+                <li>측정 중에는 마우스, 키보드, 터치, 스크롤을 일절 금합니다.</li>
+                <li>생각은 허용됩니다. 단, 티 내지 마십시오.</li>
+                <li>피험자는 준비되면 아래 버튼을 누르십시오.</li>
+              </ol>
+              <div class="rules" id="rules" aria-hidden="true"></div>
+            </div>
+          </section>
+
+          <form class="start" id="startForm" autocomplete="off" novalidate>
+            <label class="q" for="name">&gt; 피험자 이름 <span>(선택)</span></label>
+            <div class="input-line">
+              <span aria-hidden="true">›</span>
+              <input id="name" name="name" type="text" maxlength="16" placeholder="익명의 피험자" enterkeyhint="go" spellcheck="false">
+            </div>
+            <button class="btn-start" type="submit">[ 측정 시작 ]</button>
+            <p class="best-line" id="bestLine">개인 최고 기록 · 아직 없음</p>
+          </form>
+
+          <section class="grades" aria-labelledby="gradesTitle">
+            <h2 class="grades-title" id="gradesTitle">심사 기준표</h2>
+            <ol class="grade-list" id="gradeList"></ol>
+            <p class="grades-note">※ 측정 시작 후 1초간은 손 떨림 유예 시간이 적용됩니다.</p>
+          </section>
+        </div>
+      </section>
+
+      <!-- 4. 결과 화면 -->
+      <section class="screen result" id="result" aria-labelledby="sheetTitle" hidden>
+        <div class="wrap">
+          <p class="new-best" id="newBest" hidden>★ 개인 최고 기록 경신!</p>
+
+          <article class="sheet" id="sheet">
+            <p class="sheet-org"><span>SUDO SEED 멍때림 심사위원회</span><span>MEONG-O-METER v1.0</span></p>
+            <h2 class="sheet-title" id="sheetTitle" tabindex="-1">공식 측정 결과지</h2>
+            <p class="sheet-no">국가공인 아님 · 제 <span id="rNoTop">MEONG-0000-000000</span> 호</p>
+
+            <div class="sheet-hero">
+              <div class="hero-cell">
+                <p class="hero-label">등급</p>
+                <p class="hero-grade" id="rGrade">—</p>
+                <p class="hero-meta" id="rRank">—</p>
+              </div>
+              <div class="hero-cell">
+                <p class="hero-label">기록</p>
+                <p class="hero-record" id="rRecord">00:00.00</p>
+                <p class="hero-meta" id="rSec">—</p>
+              </div>
+            </div>
+
+            <dl class="sheet-rows">
+              <div><dt>측정 번호</dt><dd id="rNo">—</dd></div>
+              <div><dt>피험자</dt><dd id="rName">—</dd></div>
+              <div><dt>측정 일시</dt><dd id="rDate">—</dd></div>
+              <div class="row-dq">
+                <dt>실격 사유</dt><dd id="rReason">—</dd>
+                <span class="dq-stamp" aria-hidden="true">실격</span>
+              </div>
+              <div><dt>심사평</dt><dd id="rReview">—</dd></div>
+              <div><dt>개인 최고</dt><dd id="rBest">—</dd></div>
+            </dl>
+
+            <div class="sheet-sign">
+              <p>위 피험자는 상기 기록 동안 아무것도 하지 않았음을 공식 인정합니다.</p>
+              <p class="sign-date" id="rSignDate">—</p>
+              <p class="sign-org">
+                <span>SUDO SEED 멍때림 심사위원회</span>
+                <span class="seal" aria-label="관인: SUDO SEED 멍때림 심사위원회"><span>SUDO SEED</span><span>멍때림</span><span>심사위원회</span></span>
+              </p>
+            </div>
+
+            <p class="sheet-fine"><span>본 결과지는 국가공인이 아니며 어떠한 법적 효력도 없습니다.</span><span>SEED #02 · SUDO SEED</span></p>
+          </article>
+
+          <div class="actions">
+            <button class="btn" id="copyBtn" type="button">결과 복사</button>
+            <button class="btn" id="saveBtn" type="button">이미지로 저장</button>
+            <button class="btn btn-red" id="againBtn" type="button">다시 측정</button>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-foot">
+      <div class="wrap foot-in">
+        <p>SEED #02 · SUDO SEED</p>
+        <nav class="foot-links" aria-label="SUDO SEED 채널">
+          <a href="https://github.com/sudoseed" target="_blank" rel="noopener">github.com/sudoseed</a>
+          <a href="https://youtube.com/@sudoseed" target="_blank" rel="noopener">youtube.com/@sudoseed</a>
+        </nav>
+      </div>
+    </footer>
+  </div>
+
+  <!-- 2·3. 카운트다운과 측정 (전체 화면) -->
+  <section class="booth" id="booth" data-phase="countdown" aria-label="측정실" hidden>
+    <div class="booth-top">
+      <span class="rec"><i aria-hidden="true"></i>REC</span>
+      <span class="booth-no" id="bNo">MEONG-0000-000000</span>
+      <span class="booth-name" id="bName">피험자 · 익명의 피험자</span>
+    </div>
+
+    <div class="booth-center">
+      <div class="countdown" id="countdown">
+        <p class="cd-num" id="cdNum" aria-live="assertive">3…</p>
+        <p class="cd-sub">자세를 고정하십시오</p>
+      </div>
+
+      <div class="meter" id="meter">
+        <div class="ripple" aria-hidden="true"><b></b><i></i><i></i><i></i></div>
+        <div class="timer-box">
+          <p class="timer" id="timer"><span id="tMain">00:00</span><span class="timer-cs" id="tCs">.00</span></p>
+          <p class="live-grade" id="liveGrade">현재 판정 · 멍 입문자</p>
+        </div>
+        <p class="breath" aria-hidden="true">
+          <span class="breath-in">들이쉬고…</span><span class="breath-out">내쉬고…</span><span class="breath-still">숨은 편하게 쉬셔도 됩니다</span>
+        </p>
+      </div>
+    </div>
+
+    <ul class="metrics" aria-label="실시간 지표">
+      <li>
+        <span class="m-label">뇌파 안정도</span>
+        <b class="m-value" id="m1">72.4%</b>
+        <span class="m-bar"><i id="m1b"></i></span>
+        <span class="m-state" id="m1s">잡념 다수</span>
+      </li>
+      <li>
+        <span class="m-label">영혼 이탈률</span>
+        <b class="m-value" id="m2">0%</b>
+        <span class="m-bar"><i id="m2b"></i></span>
+        <span class="m-state" id="m2s">체내 거주</span>
+      </li>
+      <li>
+        <span class="m-label">현생 거리</span>
+        <b class="m-value" id="m3">0m</b>
+        <span class="m-bar"><i id="m3b"></i></span>
+        <span class="m-state" id="m3s">현생 인근</span>
+      </li>
+    </ul>
+
+    <p class="ticker" aria-live="polite"><span class="ticker-tag">실황</span><span class="ticker-time" id="tickTime">[00:00]</span><span class="ticker-text" id="tickText">측정 대기 중입니다.</span></p>
+
+    <div class="verdict" id="verdict" hidden>
+      <p class="verdict-stamp">실격</p>
+      <p class="verdict-reason"><b>사유:</b> <span id="vReason">—</span></p>
+      <p class="verdict-next">공식 측정 결과지를 발급하고 있습니다…</p>
+    </div>
+  </section>
+
+  <div class="flash" id="flash" aria-hidden="true"></div>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <noscript><p class="noscript">멍때림 측정기는 JavaScript가 켜져 있어야 측정할 수 있습니다.</p></noscript>
+</body>
+</html>
